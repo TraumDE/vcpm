@@ -2,6 +2,14 @@
   "name": "VCPM",
   "version": "0.0.1",
   "description": "VCPM - Voxel Core Project Manager. Is unoficall CLI util for managing content packs",
+  "main": "dist/index.js",
+  "bin": {
+    "vcpm": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/index.ts"
+  },
   "packageManager": "yarn@4.9.2",
   "devDependencies": {
     "ts-node": "^10.9.2",
