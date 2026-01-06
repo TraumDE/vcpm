@@ -1,16 +1,59 @@
 import { cwd } from "process";
 import fs from "fs";
 import { join } from "path";
+import archiver from "archiver";
+import type { PackInfo } from "../types";
+
+const isExists = (path: string): boolean => {
+  return fs.existsSync(join(cwd(), path));
+};
+
+const getPackData = (): PackInfo => {
+  const jsonData = JSON.parse(
+    fs.readFileSync(join(cwd(), "package.json"), "utf-8")
+  );
+
+  return {
+    id: jsonData.id,
+    version: jsonData.version,
+  };
+};
+
+const createDistZip = (): void => {
+  if (!isExists("package.json")) {
+    console.log("Not found package.json!");
+    return;
+  }
+
+  if (isExists("dist/build.zip")) {
+    fs.rmSync("dist/build.zip");
+  }
+
+  const packData: PackInfo = getPackData();
+
+  const output = fs.createWriteStream(
+    `dist/${packData.id}_${packData.version}.zip`
+  );
+  const archive = archiver("zip", { zlib: { level: 9 } });
+
+  archive.pipe(output);
+  archive.glob("**/*", {
+    cwd: ".",
+    ignore: ["**/.*/**", "modules/types/**", "dist"],
+    dot: true,
+  });
+  archive.finalize();
+
+  console.log("Project builded for production!");
+};
+
+const checkDistFolder = (): void => {
+  if (!isExists("dist")) {
+    fs.mkdirSync("dist");
+  }
+};
 
 export default (): void => {
-  const currentDir: string = cwd();
-  const productionFolder: string = "dist";
-
-  try {
-    if (!fs.existsSync(join(currentDir, productionFolder))) {
-      fs.mkdirSync(`dist`);
-    }
-  } catch (error) {
-    console.log(`Failed to create production folder: ${error}`);
-  }
+  checkDistFolder();
+  createDistZip();
 };
