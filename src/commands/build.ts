@@ -39,7 +39,7 @@ const createDistZip = (): void => {
   archive.pipe(output);
   archive.glob("**/*", {
     cwd: ".",
-    ignore: ["**/.*/**", "modules/types/**", "dist"],
+    ignore: ["**/.*/**", "**/.*", "modules/types/**", "dist"],
     dot: true,
   });
   archive.finalize();
