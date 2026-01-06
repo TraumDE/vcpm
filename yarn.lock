@@ -70,8 +70,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "VCPM@workspace:."
   dependencies:
+    commander: "npm:^14.0.2"
     ts-node: "npm:^10.9.2"
     typescript: "npm:^5.9.3"
+  bin:
+    vcpm: ./dist/index.js
   languageName: unknown
   linkType: soft
 
@@ -97,6 +100,13 @@ __metadata:
   version: 4.1.3
   resolution: "arg@npm:4.1.3"
   checksum: 10c0/070ff801a9d236a6caa647507bdcc7034530604844d64408149a26b9e87c2f97650055c0f049abd1efc024b334635c01f29e0b632b371ac3f26130f4cf65997a
+  languageName: node
+  linkType: hard
+
+"commander@npm:^14.0.2":
+  version: 14.0.2
+  resolution: "commander@npm:14.0.2"
+  checksum: 10c0/245abd1349dbad5414cb6517b7b5c584895c02c4f7836ff5395f301192b8566f9796c82d7bd6c92d07eba8775fe4df86602fca5d86d8d10bcc2aded1e21c2aeb
   languageName: node
   linkType: hard
 
