@@ -16,6 +16,10 @@
     "CLI",
     "Utility"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TraumDE/vcpm.git"
+  },
   "author": "Eugene301|TraumDE",
   "license": "MIT",
   "packageManager": "yarn@4.12.0",
