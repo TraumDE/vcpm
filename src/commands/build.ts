@@ -25,15 +25,14 @@ const createDistZip = (): void => {
     return;
   }
 
-  if (isExists("dist/build.zip")) {
-    fs.rmSync("dist/build.zip");
+  const packData: PackInfo = getPackData();
+  const distPath = `dist/${packData.id}_${packData.version}.zip`;
+
+  if (isExists(distPath)) {
+    fs.rmSync(distPath);
   }
 
-  const packData: PackInfo = getPackData();
-
-  const output = fs.createWriteStream(
-    `dist/${packData.id}_${packData.version}.zip`
-  );
+  const output = fs.createWriteStream(distPath);
   const archive = archiver("zip", { zlib: { level: 9 } });
 
   archive.pipe(output);
