@@ -14,4 +14,6 @@ npm i -g vcpm
 vcpm build
 ```
 
-- Creates a zip archive for production use, removing in production build all files and folders which starts on dot, and remove type declarations folder
+- Creates a zip archive for production use, removing in production build all files and folders which starts on dot, and remove type declarations folder.
+
+Archive format [pack_id]\_[version].zip
