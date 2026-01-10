@@ -4,9 +4,7 @@
   "description": "VCPM - Voxel Core Project Manager. Is unoficall CLI util for managing content packs",
   "main": "dist/index.js",
   "preferGlobal": "true",
-  "bin": {
-    "vcpm": "./dist/index.js"
-  },
+  "bin": "./dist/index.js",
   "files": [
     "dist/",
     "README.md",

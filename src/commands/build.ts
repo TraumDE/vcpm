@@ -2,7 +2,8 @@ import { cwd } from "process";
 import fs from "fs";
 import { join } from "path";
 import archiver from "archiver";
-import type { PackInfo } from "../types";
+import type { PackInfo, BuildOptions } from "../types";
+import { log } from "console";
 
 const isExists = (path: string): boolean => {
   return fs.existsSync(join(cwd(), path));
@@ -10,7 +11,7 @@ const isExists = (path: string): boolean => {
 
 const getPackData = (): PackInfo => {
   const jsonData = JSON.parse(
-    fs.readFileSync(join(cwd(), "package.json"), "utf-8")
+    fs.readFileSync(join(cwd(), "package.json"), "utf-8"),
   );
 
   return {
@@ -19,7 +20,7 @@ const getPackData = (): PackInfo => {
   };
 };
 
-const createDistZip = (): void => {
+const createDistZip = (isDev: boolean): void => {
   if (!isExists("package.json")) {
     console.log("Not found package.json!");
     return;
@@ -38,12 +39,16 @@ const createDistZip = (): void => {
   archive.pipe(output);
   archive.glob("**/*", {
     cwd: ".",
-    ignore: ["**/.*/**", "**/.*", "modules/types/**", "dist/**"],
+    ignore: isDev ? [] : ["**/.*/**", "**/.*", "modules/types/**", "dist/**"],
     dot: true,
   });
   archive.finalize();
 
-  console.log("Project builded for production!");
+  if (isDev) {
+    console.log("Project builded for development!");
+  } else {
+    console.log("Project builded for production!");
+  }
 };
 
 const checkDistFolder = (): void => {
@@ -52,7 +57,7 @@ const checkDistFolder = (): void => {
   }
 };
 
-export default (): void => {
+export default (options: BuildOptions): void => {
   checkDistFolder();
-  createDistZip();
+  createDistZip(options.dev);
 };

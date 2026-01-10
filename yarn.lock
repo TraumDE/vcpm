@@ -114,21 +114,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"VCPM@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "VCPM@workspace:."
-  dependencies:
-    "@types/archiver": "npm:^7"
-    "@types/node": "npm:^25.0.3"
-    archiver: "npm:^7.0.1"
-    commander: "npm:^14.0.2"
-    ts-node: "npm:^10.9.2"
-    typescript: "npm:^5.9.3"
-  bin:
-    vcpm: ./dist/index.js
-  languageName: unknown
-  linkType: soft
-
 "abort-controller@npm:^3.0.0":
   version: 3.0.0
   resolution: "abort-controller@npm:3.0.0"
@@ -861,6 +846,21 @@ __metadata:
   checksum: 10c0/bdc36fb8095d3b41df197f5fb6f11e3a26adf4059df3213e3baa93810d8f0cc76f9a74aaefc18b73e91fe7e19154ed6f134eda6fded2e0f1c8d2272ed2d2d391
   languageName: node
   linkType: hard
+
+"vcpm@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "vcpm@workspace:."
+  dependencies:
+    "@types/archiver": "npm:^7"
+    "@types/node": "npm:^25.0.3"
+    archiver: "npm:^7.0.1"
+    commander: "npm:^14.0.2"
+    ts-node: "npm:^10.9.2"
+    typescript: "npm:^5.9.3"
+  bin:
+    vcpm: ./dist/index.js
+  languageName: unknown
+  linkType: soft
 
 "which@npm:^2.0.1":
   version: 2.0.2
