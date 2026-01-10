@@ -18,7 +18,7 @@ Creates a zip archive for production use, removing in production build all files
 
 ### Development Build
 ```
-vcpm build --dev
+vcpm build -d | -dev
 ```
 Creates a zip archive for development use, without removing any files or folders.
 
