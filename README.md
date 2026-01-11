@@ -28,3 +28,14 @@ vcpm build -d | -dev
 > Creates a zip archive for development use, without removing any files or folders
 
 Archive format [pack_id]\_[version].zip
+
+## Support OS
+
+### Windows
+No tests on windows
+
+### Linux
+- Arch Linux ✅ - 0.2.2
+
+### MacOS
+No tests on MacOS
