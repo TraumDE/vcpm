@@ -11,6 +11,18 @@ npm i -g vcpm
 
 ## Usage
 
+### Help
+
+```Bash
+vcpm --help | -h
+```
+
+### Commands Help
+
+```Bash
+vcpm [command] --help | -h
+```
+
 ### Build
 
 ```Bash
@@ -22,7 +34,7 @@ vcpm build
 ### Development Build
 
 ```Bash
-vcpm build -d | -dev
+vcpm build -d | --dev
 ```
 
 > Creates a zip archive for development use, without removing any files or folders
