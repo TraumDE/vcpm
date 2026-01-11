@@ -3,7 +3,6 @@ import fs from "fs";
 import { join } from "path";
 import archiver from "archiver";
 import type { PackInfo, BuildOptions } from "../types";
-import { log } from "console";
 
 const isExists = (path: string): boolean => {
   return fs.existsSync(join(cwd(), path));
