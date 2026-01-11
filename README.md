@@ -33,7 +33,7 @@ Archive format [pack_id]\_[version].zip
 
 ### Windows
 
-No tests on windows
+- Windows 11 ✅ - 0.2.2
 
 ### Linux
 
