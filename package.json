@@ -34,6 +34,7 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "@gutenye/commander-completion-carapace": "^1.0.9",
     "archiver": "^7.0.1",
     "commander": "^14.0.2"
   }
