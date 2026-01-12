@@ -1,2 +1,2 @@
-export * from "./packInfo";
-export * from "./buildOptions";
+export * from "./packInfo.js";
+export * from "./buildOptions.js";

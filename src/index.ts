@@ -1,8 +1,6 @@
 #!/usr/bin/env node
-import { Command } from "commander";
-import build from "./commands/build";
-
-const program: Command = new Command();
+import { program, Option } from "@gutenye/commander-completion-carapace";
+import build from "./commands/build.js";
 
 program
   .name("vcpm")

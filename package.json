@@ -1,6 +1,7 @@
 {
   "name": "vcpm",
   "version": "0.2.2",
+  "type": "module",
   "description": "VCPM - Voxel Core Project Manager. Is unoficall CLI util for managing content packs",
   "main": "dist/index.js",
   "preferGlobal": true,

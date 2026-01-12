@@ -2,7 +2,7 @@ import { cwd } from "process";
 import fs from "fs";
 import { join } from "path";
 import archiver from "archiver";
-import type { PackInfo, BuildOptions } from "../types";
+import type { PackInfo, BuildOptions } from "../types/index.js";
 
 const isExists = (path: string): boolean => {
   return fs.existsSync(join(cwd(), path));
