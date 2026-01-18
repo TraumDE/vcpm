@@ -5,6 +5,9 @@
 CLI util for managing voxel core content packs, with vcpm we can start 
 new project and build it for release
 
+## WIP
+Currently project rewrite from commander js to oclif js framework
+
 ## Instalation
 
 ```Bash

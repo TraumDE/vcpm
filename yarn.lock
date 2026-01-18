@@ -2913,6 +2913,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@zip.js/zip.js@npm:^2.8.15":
+  version: 2.8.15
+  resolution: "@zip.js/zip.js@npm:2.8.15"
+  checksum: 10c0/67fc66e23a1d41bcb4ea7fcd92c8d417f7a0acab3d97049edbe589703a16f489c7a95bc36cf6d911433d849ffaffa44fc9212a52007ff329909b070c0de3c5a7
+  languageName: node
+  linkType: hard
+
 "abbrev@npm:^3.0.0, abbrev@npm:^3.0.1":
   version: 3.0.1
   resolution: "abbrev@npm:3.0.1"
@@ -8718,6 +8725,7 @@ __metadata:
     "@types/chai": "npm:^4"
     "@types/mocha": "npm:^10"
     "@types/node": "npm:^18"
+    "@zip.js/zip.js": "npm:^2.8.15"
     chai: "npm:^4"
     eslint: "npm:^9"
     eslint-config-oclif: "npm:^6"
