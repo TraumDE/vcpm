@@ -10,7 +10,8 @@
     "@oclif/plugin-autocomplete": "^3.2.39",
     "@oclif/plugin-help": "^6",
     "@oclif/plugin-plugins": "^5",
-    "@zip.js/zip.js": "^2.8.15"
+    "@zip.js/zip.js": "^2.8.15",
+    "glob": "^13.0.0"
   },
   "devDependencies": {
     "@eslint/compat": "^1",
@@ -74,5 +75,6 @@
     "test": "mocha --forbid-only \"test/**/*.test.ts\"",
     "version": "oclif readme && git add README.md"
   },
-  "types": "dist/index.d.ts"
+  "types": "dist/index.d.ts",
+  "packageManager": "yarn@4.12.0"
 }
