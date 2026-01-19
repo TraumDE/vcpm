@@ -7,9 +7,9 @@ import {promises as fs} from 'node:fs'
 import type {PackageInfo} from '../../types/index.js'
 
 export class Build extends Command {
-  static description = 'build project'
+  static description = 'Build project'
   static flags = {
-    dev: Flags.boolean({char: 'd', description: 'build in development mode'}),
+    dev: Flags.boolean({char: 'd', description: 'Build in development mode'}),
   }
 
   public async run(): Promise<void> {
