@@ -13,7 +13,6 @@ export class Build extends Command {
   }
 
   public async run(): Promise<void> {
-    this.log('Start building...')
     await this.build()
   }
 
@@ -24,6 +23,8 @@ export class Build extends Command {
 
   private async build(): Promise<void> {
     const packageInfo: PackageInfo = await this.readPackage()
+
+    this.log('Start building...')
 
     if (await this.fileExists('dist')) {
       this.log('Remove previous build...')
@@ -75,6 +76,12 @@ export class Build extends Command {
     }
 
     const packageJsonParsed = JSON.parse(await fs.readFile('package.json', 'utf8'))
+
+    if (!packageJsonParsed.id && !packageJsonParsed.version) {
+      this.error('Its not voxel core content pack', {
+        code: 'EINVAL',
+      })
+    }
 
     return {
       id: packageJsonParsed.id,
