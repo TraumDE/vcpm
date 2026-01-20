@@ -13,6 +13,7 @@ new project and build it for release
 - [Usage](#usage)
 - [Commands](#commands)
 - [Roadmap](#roadmap)
+- [Support Shells](#support-shells)
 - [Support OS](#support-os)
 
 ## Installation
