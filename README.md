@@ -111,6 +111,9 @@ EXAMPLES
 - [x] Bash
 - [x] Zsh
 - [x] Powershell 7+
+- [x] Fish (Without Autocomplete)
+- [x] CMD (Without Autocomplete)
+- [x] Powershell < 7 (Without Autocomplete)
 
 ## Support OS
 
