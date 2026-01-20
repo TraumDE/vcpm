@@ -5,56 +5,101 @@
 CLI util for managing voxel core content packs, with vcpm we can start 
 new project and build it for release
 
-## WIP
-Currently project rewrite from commander js to oclif js framework
+[![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
+[![Version](https://img.shields.io/npm/v/vcpm.svg)](https://npmjs.org/package/vcpm)
+[![Downloads/week](https://img.shields.io/npm/dw/vcpm.svg)](https://npmjs.org/package/vcpm)
 
-## Instalation
+- [Installation](#installation)
+- [Usage](#usage)
+- [Commands](#commands)
+- [Support OS](#support-os)
 
-```Bash
+## Installation
+
+```bash
 npm i -g vcpm
 ```
 
 ## Usage
 
-### Help
+### Run command
 
 ```Bash
-vcpm --help | -h
+vcpm COMMAND
 ```
 
-### Commands Help
+### Check version
 
 ```Bash
-vcpm [command] --help | -h
+vcpm --version | -v
 ```
 
-### Build
+### Help with command
 
 ```Bash
-vcpm build
+vcpm COMMAND --help
 ```
 
-> Creates a zip archive for production use, removing in production build all files and folders which starts on dot, and remove type declarations folder.
+## Commands
 
-### Development Build
+- [`vcpm build`](#vcpm-build)
+- [`vcpm autocomplete`](#vcpm-autocomplete)
+
+### `vcpm build`
+
+Build project
 
 ```Bash
-vcpm build -d | --dev
+USAGE
+  $ vcpm build [-d]
+
+FLAGS
+  -d, --dev  build in development mode
+
+DESCRIPTION
+  build project
 ```
 
-> Creates a zip archive for development use, without removing any files or folders
+_See code: [src/commands/build/index.ts](https://github.com/TraumDE/vcpm/blob/main/src/commands/build/index.ts)_
 
-Archive format [pack_id]\_[version].zip
+### `vcpm autocomplete`
+
+Display autocomplete installation instructions.
+
+```Bash
+USAGE
+  $ vcpm autocomplete [SHELL] [-r]
+
+ARGUMENTS
+  [SHELL]  (zsh|bash|powershell) Shell type
+
+FLAGS
+  -r, --refresh-cache  Refresh cache (ignores displaying instructions)
+
+DESCRIPTION
+  Display autocomplete installation instructions.
+
+EXAMPLES
+  $ vcpm autocomplete
+
+  $ vcpm autocomplete bash
+
+  $ vcpm autocomplete zsh
+
+  $ vcpm autocomplete powershell
+
+  $ vcpm autocomplete --refresh-cache
+```
 
 ## Support OS
 
 ### Windows
 
-- Windows 11 ✅ - 0.2.2
+- Windows 11 ❓ - 0.2.2 (need update)
 
 ### Linux
 
-- Arch Linux ✅ - 0.2.2
+- Arch Linux ✅ - 0.3.0
 
 ### MacOS
 
