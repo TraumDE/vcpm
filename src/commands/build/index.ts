@@ -26,6 +26,8 @@ export class Build extends Command {
     try {
       await fs.access('dist')
     } catch {
+      this.log('Remove previous build...')
+      await fs.rm('dist', {recursive: true})
       await fs.mkdir('dist')
     }
 
