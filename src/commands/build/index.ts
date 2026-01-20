@@ -2,7 +2,7 @@ import {Command, Flags} from '@oclif/core'
 import {BlobReader, BlobWriter, ZipWriter} from '@zip.js/zip.js'
 import {glob, Path} from 'glob'
 import {Buffer} from 'node:buffer'
-import {promises as fs} from 'node:fs'
+import {promises as fs, PathLike} from 'node:fs'
 
 import type {PackageInfo} from '../../types/index.js'
 
@@ -23,13 +23,14 @@ export class Build extends Command {
   }
 
   private async build(): Promise<void> {
-    try {
-      await fs.access('dist')
-    } catch {
+    const packageInfo: PackageInfo = await this.readPackage()
+
+    if (await this.fileExists('dist')) {
       this.log('Remove previous build...')
-      await fs.rm('dist', {recursive: true})
-      await fs.mkdir('dist')
+      await fs.rm('dist', {force: true, recursive: true})
     }
+
+    await fs.mkdir('dist')
 
     const zipFileWriter: BlobWriter = new BlobWriter('application/zip')
     const zipWriter: ZipWriter<Blob> = new ZipWriter(zipFileWriter)
@@ -48,8 +49,7 @@ export class Build extends Command {
     const zipBlob: Blob = await zipWriter.close()
     const buffer: Buffer = Buffer.from(await zipBlob.arrayBuffer())
 
-    const packageInfo: PackageInfo = await this.readPackage()
-    await fs.writeFile(`dist/${packageInfo.id}_${packageInfo.version}.zip`, buffer)
+    await fs.writeFile(`dist/${packageInfo.id}_${packageInfo.version}_${flags.dev ? 'dev' : ''}.zip`, buffer)
 
     if (flags.dev) {
       this.log('Development build completed!')
@@ -58,7 +58,22 @@ export class Build extends Command {
     }
   }
 
+  private async fileExists(file: PathLike): Promise<boolean> {
+    try {
+      await fs.access(file, fs.constants.F_OK)
+      return true
+    } catch {
+      return false
+    }
+  }
+
   private async readPackage(): Promise<PackageInfo> {
+    if (!(await this.fileExists('package.json'))) {
+      this.error('package.json file does not exist', {
+        code: 'ENOENT',
+      })
+    }
+
     const packageJsonParsed = JSON.parse(await fs.readFile('package.json', 'utf8'))
 
     return {
