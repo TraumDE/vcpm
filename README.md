@@ -12,6 +12,7 @@ new project and build it for release
 - [Installation](#installation)
 - [Usage](#usage)
 - [Commands](#commands)
+- [Roadmap](#roadmap)
 - [Support OS](#support-os)
 
 ## Installation
@@ -90,6 +91,20 @@ EXAMPLES
 
   $ vcpm autocomplete --refresh-cache
 ```
+
+## Roadmap
+
+### Plans
+
+- [ ] Made standalone verison
+- [ ] Package management function
+- [ ] Create new project command
+- [ ] More features coming soon
+
+### Ready
+
+- [x] Building project for production and development
+- [x] Autocomplete for crossplaforms
 
 ## Support OS
 
