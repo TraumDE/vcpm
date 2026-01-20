@@ -106,6 +106,12 @@ EXAMPLES
 - [x] Building project for production and development
 - [x] Autocomplete for crossplaforms
 
+## Support Shells
+
+- [x] Bash
+- [x] Zsh
+- [x] Powershell 7+
+
 ## Support OS
 
 ### Windows
