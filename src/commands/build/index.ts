@@ -23,6 +23,7 @@ export class Build extends Command {
 
   private async build(): Promise<void> {
     const packageInfo: PackageInfo = await this.readPackage()
+    const {flags} = await this.parse(Build)
 
     this.log('Start building...')
 
@@ -33,10 +34,6 @@ export class Build extends Command {
 
     await fs.mkdir('dist')
 
-    const zipFileWriter: BlobWriter = new BlobWriter('application/zip')
-    const zipWriter: ZipWriter<Blob> = new ZipWriter(zipFileWriter)
-    const {flags} = await this.parse(Build)
-
     const files: Path[] = await glob('**/*', {
       cwd: process.cwd(),
       dot: true,
@@ -44,13 +41,15 @@ export class Build extends Command {
       nodir: true,
       withFileTypes: true,
     })
+    const zipFileWriter: BlobWriter = new BlobWriter('application/zip')
+    const zipWriter: ZipWriter<Blob> = new ZipWriter(zipFileWriter)
     const filePromises: Promise<void>[] = files.map((file) => this.addFile(file, zipWriter))
     await Promise.all(filePromises)
 
     const zipBlob: Blob = await zipWriter.close()
     const buffer: Buffer = Buffer.from(await zipBlob.arrayBuffer())
 
-    await fs.writeFile(`dist/${packageInfo.id}_${packageInfo.version}_${flags.dev ? 'dev' : ''}.zip`, buffer)
+    await fs.writeFile(`dist/${packageInfo.id}_${packageInfo.version}${flags.dev ? '_dev' : ''}.zip`, buffer)
 
     if (flags.dev) {
       this.log('Development build completed!')
