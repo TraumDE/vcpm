@@ -102,6 +102,7 @@ EXAMPLES
 - [ ] Package management function
 - [ ] Create new project command
 - [ ] More features coming soon
+- [ ] Project Website
 
 ### Ready
 
