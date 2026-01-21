@@ -42,7 +42,9 @@
     "CLI",
     "VCPM",
     "Voxel Core Project Manager",
-    "Voxel Core"
+    "Voxel Core",
+    "Utility",
+    "Util"
   ],
   "license": "MIT",
   "main": "dist/index.js",
