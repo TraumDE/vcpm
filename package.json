@@ -50,6 +50,9 @@
   "main": "dist/index.js",
   "type": "module",
   "oclif": {
+    "macos": {
+      "identifier": "com.voxelcorepackagemanager.cli"
+    },
     "bin": "vcpm",
     "dirname": "vcpm",
     "commands": "./dist/commands",
