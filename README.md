@@ -119,7 +119,6 @@ EXAMPLES
 
 ### Plans
 
-- [ ] Made standalone verison
 - [ ] Package management function
 - [ ] Create new project command
 - [ ] More features coming soon
@@ -127,6 +126,7 @@ EXAMPLES
 
 ### Ready
 
+- [x] Made standalone verison
 - [x] Building project for production and development
 - [x] Autocomplete for crossplaforms
 
