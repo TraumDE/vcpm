@@ -19,9 +19,23 @@ new project and build it for release
 
 ## Installation
 
+### With NPM
 ```bash
 npm i -g vcpm
 ```
+### Standalone 
+#### Windows
+- [Windows-arm64](https://github.com/TraumDE/vcpm/releases/download/0.4.0/vcpm-v0.4.0-ef8c1e4-arm64.exe)
+- [Windows-x64](https://github.com/TraumDE/vcpm/releases/download/0.4.0/vcpm-v0.4.0-ef8c1e4-x64.exe)
+#### Linux
+- [Deb-amd64](https://github.com/TraumDE/vcpm/releases/download/0.4.0/vcpm-v0.4.0-ef8c1e4-amd64.deb)
+- [Deb-arm64](https://github.com/TraumDE/vcpm/releases/download/0.4.0/vcpm-v0.4.0-ef8c1e4-arm64.deb)
+
+#### MacOS
+- [MacOS-x64](https://github.com/TraumDE/vcpm/releases/download/0.4.0/vcpm-v0.4.0-ef8c1e4-x64.pkg)
+- [MacOS-arm64](https://github.com/TraumDE/vcpm/releases/download/0.4.0/vcpm-v0.4.0-ef8c1e4-arm64.pkg)
+
+Other releases can be found in latest release [here](https://github.com/TraumDE/vcpm/releases/latest)
 
 ## Usage
 
