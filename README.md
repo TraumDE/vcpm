@@ -140,7 +140,7 @@ EXAMPLES
 
 ### Linux
 
-- Arch Linux ✅ - 0.3.0
+- Arch Linux ✅ - 0.4.0
 
 ### MacOS
 
