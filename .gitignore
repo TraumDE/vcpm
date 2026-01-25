@@ -9,7 +9,6 @@ oclif.manifest.json
 
 package-lock.json
 pnpm-lock.yaml
-yarn.lock
 .pnp.*
 .yarn/*
 !.yarn/patches

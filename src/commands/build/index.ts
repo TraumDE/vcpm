@@ -1,8 +1,10 @@
+import type {PathLike} from 'node:fs'
+
 import {Command, Flags} from '@oclif/core'
 import {BlobReader, BlobWriter, ZipWriter} from '@zip.js/zip.js'
 import {glob, Path} from 'glob'
 import {Buffer} from 'node:buffer'
-import {promises as fs, PathLike} from 'node:fs'
+import {promises as fs} from 'node:fs'
 
 import type {PackageInfo} from '../../types/index.js'
 
