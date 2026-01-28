@@ -55,8 +55,8 @@ describe('build', () => {
 
     const {stdout} = await runCommand('build')
 
-    expect(stdout).to.contain('Remove previous build...')
     expect(stdout).to.contain('Start building...')
+    expect(stdout).to.contain('Remove previous build...')
     expect(stdout).to.contain('Production build completed!')
 
     const distDir: string[] = await readdir('dist')
@@ -110,8 +110,8 @@ describe('build', () => {
 
     const {stdout} = await runCommand('build --dev')
 
-    expect(stdout).to.contain('Remove previous build...')
     expect(stdout).to.contain('Start building...')
+    expect(stdout).to.contain('Remove previous build...')
     expect(stdout).to.contain('Development build completed!')
 
     const distDir: string[] = await readdir('dist')
@@ -196,161 +196,3 @@ describe('build', () => {
     expect(error?.oclif?.exit).to.equal(2)
   })
 })
-
-// describe('build', () => {
-//   // Временная директория для тестов
-//   let testDir: string
-
-//   beforeEach(async () => {
-//     // Создаём временную директорию для тестов
-//     testDir = await mkdtemp(join(process.cwd(), 'test-build-'))
-//   })
-
-//   afterEach(async () => {
-//     // Удаляем временную директорию после теста
-//     if (testDir) {
-//       await rm(testDir, {force: true, recursive: true})
-//     }
-//   })
-
-//   it('runs build command and creates zip file', async () => {
-//     // Подготовка тестовой среды
-//     const originalCwd = process.cwd()
-
-//     try {
-//       // Меняем текущую директорию на тестовую
-//       process.chdir(testDir)
-
-//       // Создаём тестовый package.json
-//       await writeFile(
-//         'package.json',
-//         JSON.stringify({
-//           id: 'test-package',
-//           version: '1.0.0',
-//         }),
-//       )
-
-//       // Создаём тестовые файлы
-//       await writeFile('file1.txt', 'content1')
-//       await mkdir('subdir', {recursive: true})
-//       await writeFile('subdir/file2.txt', 'content2')
-
-//       const {stdout} = await runCommand(['build'])
-
-//       // Проверяем логи
-//       expect(stdout).to.contain('Start building...')
-//       expect(stdout).to.contain('Production build completed!')
-
-//       // Проверяем, что файл был создан
-//       const expectedZipFile = 'dist/test-package_1.0.0.zip'
-//       const distDir = await readdir('dist')
-//       expect(distDir).to.have.length(1)
-//       expect(distDir[0]).to.equal('test-package_1.0.0.zip')
-
-//       // Проверяем содержимое файла
-//       const zipContent = await readFile(expectedZipFile)
-//       expect(zipContent).to.not.be.empty
-//     } finally {
-//       // Восстанавливаем оригинальную директорию
-//       process.chdir(originalCwd)
-//     }
-//   })
-
-//   it('runs build command in development mode', async () => {
-//     const originalCwd = process.cwd()
-
-//     try {
-//       process.chdir(testDir)
-
-//       await writeFile(
-//         'package.json',
-//         JSON.stringify({
-//           id: 'test-package',
-//           version: '1.0.0',
-//         }),
-//       )
-
-//       await writeFile('file1.txt', 'content1')
-//       await mkdir('.hidden-dir', {recursive: true})
-//       await writeFile('.hidden-dir/hidden-file.txt', 'hidden-content')
-
-//       const {stdout} = await runCommand(['build', '--dev'])
-
-//       expect(stdout).to.contain('Start building...')
-//       expect(stdout).to.contain('Development build completed!')
-
-//       // В dev режиме должны быть включены скрытые файлы
-//       const distDir = await readdir('dist')
-//       expect(distDir).to.have.length(1)
-//       expect(distDir[0]).to.include('_dev.zip')
-//     } finally {
-//       process.chdir(originalCwd)
-//     }
-//   })
-
-//   it('fails when package.json does not exist', async () => {
-//     const originalCwd = process.cwd()
-
-//     try {
-//       process.chdir(testDir)
-
-//       // Не создаём package.json
-
-//       let errorOccurred = false
-//       try {
-//         await runCommand(['build'])
-//       } catch (error) {
-//         errorOccurred = true
-//         expect((error as Error).message).to.contain('package.json file does not exist')
-//       }
-
-//       expect(errorOccurred).to.be.true
-//     } finally {
-//       process.chdir(originalCwd)
-//     }
-//   })
-
-//   it('fails when package.json has invalid format', async () => {
-//     const originalCwd = process.cwd()
-
-//     try {
-//       process.chdir(testDir)
-
-//       // Создаём невалидный package.json
-//       await writeFile('package.json', '{ invalid json')
-
-//       let errorOccurred = false
-//       try {
-//         await runCommand(['build'])
-//       } catch {
-//         errorOccurred = true
-//       }
-
-//       expect(errorOccurred).to.be.true
-//     } finally {
-//       process.chdir(originalCwd)
-//     }
-//   })
-
-//   describe('build', () => {
-//     test
-//       .stdout()
-//       .stderr()
-//       .do(async () => {
-//         // Создаём временную директорию и переходим в неё
-//         await writeFile(
-//           join(testDir, 'package.json'),
-//           JSON.stringify({
-//             name: 'test-package',
-//             // нет id и version
-//           }),
-//         )
-//       })
-//       .cd(testDir)
-//       .command(['build'])
-//       .catch((error) => {
-//         expect(error.message).to.contain('Its not voxel core content pack')
-//       })
-//       .it('fails when package.json missing required fields')
-//   })
-// })

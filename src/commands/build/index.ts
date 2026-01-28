@@ -20,7 +20,7 @@ export class Build extends Command {
 
   private async addFile(file: Path, zipWriter: ZipWriter<Blob>): Promise<void> {
     const relativePath: string = file.relative()
-    await zipWriter.add(relativePath, new Uint8ArrayReader(new Uint8Array(await fs.readFile(relativePath))))
+    await zipWriter.add(relativePath, new Uint8ArrayReader(await fs.readFile(relativePath)))
   }
 
   private async build(): Promise<void> {
