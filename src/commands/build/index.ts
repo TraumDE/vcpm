@@ -84,6 +84,31 @@ export class Build extends Command {
       })
     }
 
+    const validPackageId = (): boolean => {
+      const idRegex = /^[a-zA-Z_][a-zA-Z0-9_]{1,23}$/
+      return idRegex.test(packageJsonParsed.id)
+    }
+
+    const validPackageVersion = (): boolean => {
+      const versionRegex = /^\d+\.\d+\.\d+$/
+      return versionRegex.test(packageJsonParsed.version)
+    }
+
+    if (!validPackageId()) {
+      this.error('Invalid package ID', {
+        code: 'EINVAL',
+        message:
+          'PackageInfo ID must start with a letter or underscore and contain only letters, numbers, and underscores. 2-24 characters',
+      })
+    }
+
+    if (!validPackageVersion()) {
+      this.error('Invalid package version', {
+        code: 'EINVAL',
+        message: 'Version must be in the format X.Y.Z',
+      })
+    }
+
     return {
       id: packageJsonParsed.id,
       version: packageJsonParsed.version,
