@@ -98,7 +98,7 @@ export class Build extends Command {
       this.error('Invalid package ID', {
         code: 'EINVAL',
         message:
-          'PackageInfo ID must start with a letter or underscore and contain only letters, numbers, and underscores. 2-24 characters',
+          'Package ID must start with a letter or underscore, contain only letters, numbers, and underscores, and be 2-24 characters long',
       })
     }
 
