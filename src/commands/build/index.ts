@@ -95,17 +95,17 @@ export class Build extends Command {
     }
 
     if (!validPackageId()) {
-      this.error('Invalid package ID', {
-        code: 'EINVAL',
-        message:
-          'Package ID must start with a letter or underscore, contain only letters, numbers, and underscores, and be 2-24 characters long',
-      })
+      this.error(
+        'Package ID must start with a letter or underscore, contain only letters, numbers, and underscores, and be 2-24 characters long',
+        {
+          code: 'EINVAL',
+        },
+      )
     }
 
     if (!validPackageVersion()) {
-      this.error('Invalid package version', {
+      this.error('Version must be in the format X.Y.Z', {
         code: 'EINVAL',
-        message: 'Version must be in the format X.Y.Z',
       })
     }
 

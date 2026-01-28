@@ -11,14 +11,14 @@ describe('build', () => {
   let originalCwd: string
 
   const rightPackageData: PackageInfo = {
-    id: 'test-package',
+    id: 'test_package',
     version: '1.0.0',
   }
 
   const testFileText: string = 'test'
 
-  const productionBuildName: string = 'test-package_1.0.0.zip'
-  const developmentBuildName: string = 'test-package_1.0.0_dev.zip'
+  const productionBuildName: string = 'test_package_1.0.0.zip'
+  const developmentBuildName: string = 'test_package_1.0.0_dev.zip'
 
   const createDevFiles = async (): Promise<void> => {
     await writeFile('.gitignore', testFileText)
@@ -158,6 +158,7 @@ describe('build', () => {
 
   it('cause error if package.json not exists', async () => {
     const {error} = await runCommand('build')
+    expect(error?.message).to.contain('package.json file does not exist')
     expect(error?.oclif?.exit).to.equal(2)
   })
 
@@ -176,23 +177,40 @@ describe('build', () => {
     await writeFile(
       'package.json',
       JSON.stringify({
-        name: 'test-name',
+        name: 'test_name',
         version: '1.0.0',
       }),
     )
     const {error} = await runCommand('build')
+    expect(error?.message).to.contain('Its not voxel core content pack')
     expect(error?.oclif?.exit).to.equal(2)
   })
 
-  it('cause error if package.json data is invalid', async () => {
+  it('cause error if package.json id is invalid', async () => {
     await writeFile(
       'package.json',
       JSON.stringify({
-        id: 'test-id',
+        id: '123seaeasw-dsadsadsdasdsadddsasadasdadsad',
+        version: '0.0.0',
+      }),
+    )
+    const {error} = await runCommand('build')
+    expect(error?.message).to.contain(
+      'Package ID must start with a letter or underscore, contain only letters, numbers, and underscores, and be 2-24 characters long',
+    )
+    expect(error?.oclif?.exit).to.equal(2)
+  })
+
+  it('cause error if package.json version is invalid', async () => {
+    await writeFile(
+      'package.json',
+      JSON.stringify({
+        id: 'dsasddsa_dsadsa',
         version: 'invalid-version',
       }),
     )
     const {error} = await runCommand('build')
+    expect(error?.message).to.contain('Version must be in the format X.Y.Z')
     expect(error?.oclif?.exit).to.equal(2)
   })
 })
