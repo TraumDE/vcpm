@@ -25,7 +25,7 @@ new project and build it for release
 npm i -g vcpm
 ```
 
-### Standalone 
+### Installers
 
 #### Windows
 
@@ -42,7 +42,7 @@ npm i -g vcpm
 - [MacOS-x64 (.pkg)](https://github.com/TraumDE/vcpm/releases/download/0.4.0/vcpm-v0.4.0-ef8c1e4-x64.pkg)
 - [MacOS-arm64 (.pkg)](https://github.com/TraumDE/vcpm/releases/download/0.4.0/vcpm-v0.4.0-ef8c1e4-arm64.pkg)
 
-Other releases can be found in latest release [Watch here](https://github.com/TraumDE/vcpm/releases/latest)
+Standalone tarballs can be found in latest release [Watch here](https://github.com/TraumDE/vcpm/releases/latest)
 
 ## Usage
 
