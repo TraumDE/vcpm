@@ -1,7 +1,7 @@
 import type {PathLike} from 'node:fs'
 
 import {Command, Flags} from '@oclif/core'
-import {BlobReader, BlobWriter, ZipWriter} from '@zip.js/zip.js'
+import {BlobWriter, Uint8ArrayReader, ZipWriter} from '@zip.js/zip.js'
 import {glob, Path} from 'glob'
 import {Buffer} from 'node:buffer'
 import {promises as fs} from 'node:fs'
@@ -20,7 +20,7 @@ export class Build extends Command {
 
   private async addFile(file: Path, zipWriter: ZipWriter<Blob>): Promise<void> {
     const relativePath: string = file.relative()
-    await zipWriter.add(relativePath, new BlobReader(new Blob([new Uint8Array(await fs.readFile(relativePath))])))
+    await zipWriter.add(relativePath, new Uint8ArrayReader(new Uint8Array(await fs.readFile(relativePath))))
   }
 
   private async build(): Promise<void> {
@@ -78,7 +78,7 @@ export class Build extends Command {
 
     const packageJsonParsed = JSON.parse(await fs.readFile('package.json', 'utf8'))
 
-    if (!packageJsonParsed.id && !packageJsonParsed.version) {
+    if (!packageJsonParsed.id || !packageJsonParsed.version) {
       this.error('Its not voxel core content pack', {
         code: 'EINVAL',
       })
