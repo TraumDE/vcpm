@@ -183,6 +183,18 @@ describe('build', () => {
     const {error} = await runCommand('build')
     expect(error?.oclif?.exit).to.equal(2)
   })
+
+  it('cause error if package.json data is invalid', async () => {
+    await writeFile(
+      'package.json',
+      JSON.stringify({
+        id: 'test-id',
+        version: 'invalid-version',
+      }),
+    )
+    const {error} = await runCommand('build')
+    expect(error?.oclif?.exit).to.equal(2)
+  })
 })
 
 // describe('build', () => {
