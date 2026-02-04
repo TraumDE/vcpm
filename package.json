@@ -6,27 +6,27 @@
   "bin": "./bin/run.js",
   "bugs": "https://github.com/TraumDE/vcpm/issues",
   "dependencies": {
-    "@oclif/core": "^4",
-    "@oclif/plugin-autocomplete": "^3.2.39",
-    "@zip.js/zip.js": "^2.8.15",
-    "glob": "^13.0.0"
+    "@oclif/core": "^4.8.0",
+    "@oclif/plugin-autocomplete": "^3.2.40",
+    "@zip.js/zip.js": "^2.8.16",
+    "glob": "^13.0.1"
   },
   "devDependencies": {
-    "@eslint/compat": "^1",
+    "@eslint/compat": "^2.0.2",
     "@oclif/prettier-config": "^0.2.1",
-    "@oclif/test": "^4",
-    "@types/chai": "^4",
-    "@types/mocha": "^10",
-    "@types/node": "^18",
-    "chai": "^4",
-    "eslint": "^9",
-    "eslint-config-oclif": "^6",
-    "eslint-config-prettier": "^10",
-    "mocha": "^10",
-    "oclif": "^4",
-    "shx": "^0.3.3",
-    "ts-node": "^10",
-    "typescript": "^5"
+    "@oclif/test": "^4.1.16",
+    "@types/chai": "^5.2.3",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^25.2.0",
+    "chai": "^6.2.2",
+    "eslint": "^9.39.2",
+    "eslint-config-oclif": "^6.0.137",
+    "eslint-config-prettier": "^10.1.8",
+    "mocha": "^11.7.5",
+    "oclif": "^4.22.73",
+    "shx": "^0.4.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
   },
   "engines": {
     "node": ">=18.4.0"
