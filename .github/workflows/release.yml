@@ -17,9 +17,7 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            build-command: |
-              'yarn oclif pack tarballs'
-              'yarn oclif pack deb'
+            build-command: 'yarn oclif pack tarballs && yarn oclif pack deb'
           - os: windows-latest
             build-command: 'yarn oclif pack win'
           - os: macos-latest
@@ -71,7 +69,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: all-builds
-          pattern: build-${{ matrix.os }}
+          pattern: build-*
           merge-multiple: true
 
       - name: Create Release
