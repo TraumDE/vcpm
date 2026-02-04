@@ -32,7 +32,7 @@ jobs:
       - name: Setup
         uses: actions/setup-node@v4
         with:
-          node-version: '18.4.0'
+          node-version: '>=18.4.0'
           cache: 'yarn'
 
       - name: Install dependencies
