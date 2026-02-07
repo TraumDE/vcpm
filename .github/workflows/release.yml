@@ -12,6 +12,8 @@ jobs:
   build:
     name: Build on &{{ matrix.os }}
     runs-on: ${{ matrix.os }}
+    env:
+      OCLIF_USE_TAR: false
     strategy:
       fail-fast: false
       matrix:
