@@ -17,11 +17,11 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            build-command: 'yarn oclif pack tarballs && yarn oclif pack deb'
+            pack-command: 'yarn oclif pack tarballs && yarn oclif pack deb'
           - os: windows-latest
-            build-command: 'yarn oclif pack win'
+            pack-command: 'yarn oclif pack win'
           - os: macos-latest
-            build-command: 'yarn oclif pack macos'
+            pack-command: 'yarn oclif pack macos'
 
     steps:
       - name: Checkout code
@@ -36,15 +36,26 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
+      - name: Lint
+        run: yarn lint
+
+      - name: Test
+        run: yarn test
+
       - name: Build
-        run: |
-          yarn lint
-          yarn test
-          yarn build
-          yarn prepack
-          ${{ matrix.build-command }}
-          yarn posttest
-          yarn postpack
+        run: yarn build
+
+      - name: Prepack
+        run: yarn prepack
+
+      - name: Pack
+        run: ${{ matrix.pack-command }}
+
+      - name: Posttest
+        run: yarn posttest
+
+      - name: Postpack
+        run: yarn postpack
 
       - name: Upload temporary artifacts
         uses: actions/upload-artifact@v4
