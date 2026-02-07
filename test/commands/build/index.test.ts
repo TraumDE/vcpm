@@ -6,36 +6,41 @@ import {join} from 'node:path'
 
 import type {PackageInfo} from '../../../src/types/package-info'
 
+let testDir: string
+let originalCwd: string
+
+const rightPackageData: PackageInfo = {
+  id: 'test_package',
+  version: '1.0.0',
+}
+
+const testFileText: string = 'test'
+
+const productionBuildName: string = 'test_package_1.0.0.zip'
+const developmentBuildName: string = 'test_package_1.0.0_dev.zip'
+
+const normalizeFilenames = (files: FileEntry[]): string[] => {
+  const normalizedFilenames = files.map((file) => file.filename.replaceAll('\\', '/'))
+  return normalizedFilenames
+}
+
+const createDevFiles = async (): Promise<void> => {
+  await writeFile('.gitignore', testFileText)
+  await mkdir('.git')
+  await writeFile('.git/HEAD', testFileText)
+  await mkdir('modules/types', {recursive: true})
+  await writeFile('modules/types/index.lua', testFileText)
+}
+
+const createOtherFiles = async (): Promise<void> => {
+  await writeFile('index.lua', 'test code')
+  await writeFile('modules/index.lua', testFileText)
+  await mkdir('config')
+  await writeFile('config/README.md', testFileText)
+  await mkdir('dist')
+}
+
 describe('build', () => {
-  let testDir: string
-  let originalCwd: string
-
-  const rightPackageData: PackageInfo = {
-    id: 'test_package',
-    version: '1.0.0',
-  }
-
-  const testFileText: string = 'test'
-
-  const productionBuildName: string = 'test_package_1.0.0.zip'
-  const developmentBuildName: string = 'test_package_1.0.0_dev.zip'
-
-  const createDevFiles = async (): Promise<void> => {
-    await writeFile('.gitignore', testFileText)
-    await mkdir('.git')
-    await writeFile('.git/HEAD', testFileText)
-    await mkdir('modules/types', {recursive: true})
-    await writeFile('modules/types/index.lua', testFileText)
-  }
-
-  const createOtherFiles = async (): Promise<void> => {
-    await writeFile('index.lua', 'test code')
-    await writeFile('modules/index.lua', testFileText)
-    await mkdir('config')
-    await writeFile('config/README.md', testFileText)
-    await mkdir('dist')
-  }
-
   beforeEach(async () => {
     originalCwd = process.cwd()
     testDir = await mkdtemp(join(process.cwd(), 'test-build-'))
@@ -68,15 +73,15 @@ describe('build', () => {
     const zipReader: ZipReader<Uint8ArrayReader> = new ZipReader(new Uint8ArrayReader(uInt8Array))
     const entries: Entry[] = await zipReader.getEntries()
     const files: FileEntry[] = entries.filter((entry) => !entry.directory)
-    const filenames: string[] = entries.filter((entry) => !entry.directory).map((entry) => entry.filename)
+    const normalizedFilenames: string[] = normalizeFilenames(files)
 
-    expect(filenames).to.include('package.json')
-    expect(filenames).to.include('modules/index.lua')
-    expect(filenames).to.include('config/README.md')
+    expect(normalizedFilenames).to.include('package.json')
+    expect(normalizedFilenames).to.include('modules/index.lua')
+    expect(normalizedFilenames).to.include('config/README.md')
 
-    expect(filenames).to.not.include('.git/HEAD')
-    expect(filenames).to.not.include('.gitignore')
-    expect(filenames).to.not.include('modules/types/index.lua')
+    expect(normalizedFilenames).to.not.include('.git/HEAD')
+    expect(normalizedFilenames).to.not.include('.gitignore')
+    expect(normalizedFilenames).to.not.include('modules/types/index.lua')
 
     const fileChecks = files.map(async (file) => {
       const data = await file.getData(new Uint8ArrayWriter())
@@ -123,14 +128,14 @@ describe('build', () => {
     const zipReader: ZipReader<Uint8ArrayReader> = new ZipReader(new Uint8ArrayReader(uInt8Array))
     const entries: Entry[] = await zipReader.getEntries()
     const files: FileEntry[] = entries.filter((entry) => !entry.directory)
-    const filenames: string[] = entries.filter((entry) => !entry.directory).map((entry) => entry.filename)
+    const normalizedFilenames: string[] = normalizeFilenames(files)
 
-    expect(filenames).to.include('package.json')
-    expect(filenames).to.include('modules/index.lua')
-    expect(filenames).to.include('config/README.md')
-    expect(filenames).to.include('.git/HEAD')
-    expect(filenames).to.include('.gitignore')
-    expect(filenames).to.include('modules/types/index.lua')
+    expect(normalizedFilenames).to.include('package.json')
+    expect(normalizedFilenames).to.include('modules/index.lua')
+    expect(normalizedFilenames).to.include('config/README.md')
+    expect(normalizedFilenames).to.include('.git/HEAD')
+    expect(normalizedFilenames).to.include('.gitignore')
+    expect(normalizedFilenames).to.include('modules/types/index.lua')
 
     const fileChecks = files.map(async (file) => {
       const data = await file.getData(new Uint8ArrayWriter())
