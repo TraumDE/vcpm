@@ -65,7 +65,9 @@
         "description": "Build the project for production or development"
       }
     },
-    "tarFlags": {"win32": ""}
+    "tarFlags": {
+      "win32": " "
+    }
   },
   "repository": "TraumDE/vcpm",
   "scripts": {
