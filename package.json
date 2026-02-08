@@ -61,10 +61,11 @@
     ],
     "topicSeparator": " ",
     "topics": {
-      "hello": {
-        "description": "Say hello to the world and others"
+      "build": {
+        "description": "Build the project for production or development"
       }
-    }
+    },
+    "tarFlags": {"win32": ""}
   },
   "repository": "TraumDE/vcpm",
   "scripts": {
