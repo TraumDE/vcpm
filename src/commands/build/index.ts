@@ -5,7 +5,7 @@ import AdmZip from 'adm-zip'
 import {glob, Path} from 'glob'
 import {promises as fs} from 'node:fs'
 
-import type {PackageInfo} from '../../types/index.js'
+import type {PackageInfo} from '../../types/package-info.d.ts'
 
 export class Build extends Command {
   static description = 'Build project'
