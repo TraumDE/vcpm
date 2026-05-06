@@ -9,6 +9,7 @@
     "@oclif/core": "^4.11.0",
     "@oclif/plugin-autocomplete": "^3.2.47",
     "adm-zip": "^0.5.17",
+    "ejs": "^5.0.2",
     "glob": "^13.0.1"
   },
   "devDependencies": {
