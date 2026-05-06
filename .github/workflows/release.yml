@@ -36,6 +36,12 @@ jobs:
           node-version: 'lts/*'
           cache: 'yarn'
 
+      - name: Install system dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y makensis
+        if: matrix.target == 'win'
+
       - name: Install dependencies
         run: yarn install --immutable
 
