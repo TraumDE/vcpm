@@ -14,6 +14,7 @@ new project and build it for release
 - [Installation](#installation)
 - [Usage](#usage)
 - [Commands](#commands)
+- [Development](#development)
 - [Roadmap](#roadmap)
 - [Support Shells](#support-shells)
 - [Support OS](#support-os)
@@ -102,6 +103,24 @@ EXAMPLES
   $ vcpm autocomplete powershell
 
   $ vcpm autocomplete --refresh-cache
+```
+
+## Development
+
+How to develop VCPM
+
+```Bash
+# Install dependencies
+pnpm i
+
+# Build project
+pnpm build
+
+# Run command in development mode
+./bin/dev.js
+
+# Run command in production mode
+./bin/run.js
 ```
 
 ## Roadmap
