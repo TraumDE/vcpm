@@ -17,7 +17,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node_version }}
-          cache: yarn
-      - run: yarn
-      - run: yarn build
-      - run: yarn test
+          cache: pnpm
+      - run: pnpm install
+      - run: pnpm build
+      - run: pnpm test
