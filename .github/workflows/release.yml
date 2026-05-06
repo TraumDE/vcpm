@@ -17,10 +17,13 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
+            target: linux
             pack-command: 'yarn oclif pack tarballs && yarn oclif pack deb'
-          - os: windows-latest
+          - os: ubuntu-latest
+            target: win
             pack-command: 'yarn oclif pack win'
           - os: macos-latest
+            target: macos
             pack-command: 'yarn oclif pack macos'
 
     steps:
