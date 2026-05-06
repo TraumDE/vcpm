@@ -66,17 +66,13 @@ export class Build extends Command {
 
   private async readPackage(): Promise<PackageInfo> {
     if (!(await this.fileExists('package.json'))) {
-      this.error('package.json file does not exist', {
-        code: 'ENOENT',
-      })
+      this.error('package.json file does not exist')
     }
 
     const packageJsonParsed = JSON.parse(await fs.readFile('package.json', 'utf8'))
 
     if (!packageJsonParsed.id || !packageJsonParsed.version) {
-      this.error('Its not voxel core content pack', {
-        code: 'EINVAL',
-      })
+      this.error('Its not voxel core content pack')
     }
 
     const validPackageId = (): boolean => {
@@ -92,16 +88,11 @@ export class Build extends Command {
     if (!validPackageId()) {
       this.error(
         'Package ID must start with a letter or underscore, contain only letters, numbers, and underscores, and be 2-24 characters long',
-        {
-          code: 'EINVAL',
-        },
       )
     }
 
     if (!validPackageVersion()) {
-      this.error('Version must be in the format X.Y.Z', {
-        code: 'EINVAL',
-      })
+      this.error('Version must be in the format X.Y.Z')
     }
 
     return {
