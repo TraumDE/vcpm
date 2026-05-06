@@ -73,7 +73,7 @@ DESCRIPTION
   build project
 ```
 
-_See code: [src/commands/build/index.ts](https://github.com/TraumDE/vcpm/blob/main/src/commands/build/index.ts)_
+_See code: [src/commands/build/index.ts](https://github.com/TraumDE/vcpm/blob/main/src/commands/build/index.ts)_ 
 
 ### `vcpm autocomplete`
 
