@@ -39,7 +39,7 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt update
-          sudo apt install -y makensis
+          sudo apt install -y nsis
         if: matrix.target == 'win'
 
       - name: Install dependencies
