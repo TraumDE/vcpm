@@ -8,13 +8,14 @@
   "dependencies": {
     "@oclif/core": "^4.11.0",
     "@oclif/plugin-autocomplete": "^3.2.47",
-    "@zip.js/zip.js": "^2.8.16",
+    "adm-zip": "^0.5.17",
     "glob": "^13.0.1"
   },
   "devDependencies": {
     "@eslint/compat": "^2.0.2",
     "@oclif/prettier-config": "^0.2.1",
     "@oclif/test": "^4.1.16",
+    "@types/adm-zip": "^0",
     "@types/chai": "^5.2.3",
     "@types/mocha": "^10.0.10",
     "@types/node": "^25.2.0",

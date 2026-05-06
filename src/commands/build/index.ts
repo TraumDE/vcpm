@@ -1,9 +1,8 @@
 import type {PathLike} from 'node:fs'
 
 import {Command, Flags} from '@oclif/core'
-import {BlobWriter, Uint8ArrayReader, ZipWriter} from '@zip.js/zip.js'
+import AdmZip from 'adm-zip'
 import {glob, Path} from 'glob'
-import {Buffer} from 'node:buffer'
 import {promises as fs} from 'node:fs'
 
 import type {PackageInfo} from '../../types/index.js'
@@ -16,11 +15,6 @@ export class Build extends Command {
 
   public async run(): Promise<void> {
     await this.build()
-  }
-
-  private async addFile(file: Path, zipWriter: ZipWriter<Blob>): Promise<void> {
-    const relativePath: string = file.relative()
-    await zipWriter.add(relativePath, new Uint8ArrayReader(await fs.readFile(relativePath)))
   }
 
   private async build(): Promise<void> {
@@ -43,15 +37,16 @@ export class Build extends Command {
       nodir: true,
       withFileTypes: true,
     })
-    const zipFileWriter: BlobWriter = new BlobWriter('application/zip')
-    const zipWriter: ZipWriter<Blob> = new ZipWriter(zipFileWriter)
-    const filePromises: Promise<void>[] = files.map((file) => this.addFile(file, zipWriter))
-    await Promise.all(filePromises)
 
-    const zipBlob: Blob = await zipWriter.close()
-    const buffer: Buffer = Buffer.from(await zipBlob.arrayBuffer())
+    const zip = new AdmZip()
 
-    await fs.writeFile(`dist/${packageInfo.id}_${packageInfo.version}${flags.dev ? '_dev' : ''}.zip`, buffer)
+    for await (const file of files) {
+      const relativePath = file.relative()
+      const fileBuffer = await fs.readFile(relativePath)
+      zip.addFile(relativePath, fileBuffer)
+    }
+
+    await fs.writeFile(`dist/${packageInfo.id}_${packageInfo.version}${flags.dev ? '_dev' : ''}.zip`, zip.toBuffer())
 
     if (flags.dev) {
       this.log('Development build completed!')
