@@ -1,5 +1,5 @@
 import {runCommand} from '@oclif/test'
-import {Entry, FileEntry, TextWriter, Uint8ArrayReader, Uint8ArrayWriter, ZipReader} from '@zip.js/zip.js'
+import AdmZip from 'adm-zip'
 import {expect} from 'chai'
 import {mkdir, mkdtemp, readdir, readFile, rm, writeFile} from 'node:fs/promises'
 import {join} from 'node:path'
@@ -18,11 +18,6 @@ const testFileText: string = 'test'
 
 const productionBuildName: string = 'test_package_1.0.0.zip'
 const developmentBuildName: string = 'test_package_1.0.0_dev.zip'
-
-const normalizeFilenames = (files: FileEntry[]): string[] => {
-  const normalizedFilenames = files.map((file) => file.filename.replaceAll('\\', '/'))
-  return normalizedFilenames
-}
 
 const createDevFiles = async (): Promise<void> => {
   await writeFile('.gitignore', testFileText)
@@ -68,43 +63,38 @@ describe('build', () => {
 
     expect(distDir).to.include(productionBuildName)
 
-    const zipBuffer: Buffer = await readFile(join('dist', productionBuildName))
-    const uInt8Array: Uint8Array = new Uint8Array(zipBuffer)
-    const zipReader: ZipReader<Uint8ArrayReader> = new ZipReader(new Uint8ArrayReader(uInt8Array))
-    const entries: Entry[] = await zipReader.getEntries()
-    const files: FileEntry[] = entries.filter((entry) => !entry.directory)
-    const normalizedFilenames: string[] = normalizeFilenames(files)
+    const zip = new AdmZip(join('dist', productionBuildName))
+    const zipEntries = zip.getEntries()
+    const fileNames = zipEntries.map((zipEntry) => zipEntry.entryName)
 
-    expect(normalizedFilenames).to.include('package.json')
-    expect(normalizedFilenames).to.include('modules/index.lua')
-    expect(normalizedFilenames).to.include('config/README.md')
+    // const zipBuffer: Buffer = await readFile(join('dist', productionBuildName))
+    // const uInt8Array: Uint8Array = new Uint8Array(zipBuffer)
+    // const zipReader: ZipReader<Uint8ArrayReader> = new ZipReader(new Uint8ArrayReader(uInt8Array))
+    // const entries: Entry[] = await zipReader.getEntries()
+    // const files: FileEntry[] = entries.filter((entry) => !entry.directory)
+    // const normalizedFilenames: string[] = normalizeFilenames(files)
 
-    expect(normalizedFilenames).to.not.include('.git/HEAD')
-    expect(normalizedFilenames).to.not.include('.gitignore')
-    expect(normalizedFilenames).to.not.include('modules/types/index.lua')
+    expect(fileNames).to.include('package.json')
+    expect(fileNames).to.include('modules/index.lua')
+    expect(fileNames).to.include('config/README.md')
 
-    const fileChecks = files.map(async (file) => {
-      const data = await file.getData(new Uint8ArrayWriter())
-      return {
-        filename: file.filename,
-        isEmpty: data.length === 0,
-      }
-    })
-    const fileCheckResults = await Promise.all(fileChecks)
+    expect(fileNames).to.not.include('.git/HEAD')
+    expect(fileNames).to.not.include('.gitignore')
+    expect(fileNames).to.not.include('modules/types/index.lua')
 
-    for (const {filename, isEmpty} of fileCheckResults) {
-      expect(isEmpty, `File "${filename}" is empty`).to.be.false
+    for (const entry of zipEntries) {
+      const data = entry.getData()
+      expect(data.length === 0, `File ${entry.entryName} is empty`).to.be.false
     }
 
-    const packageJsonContent: string | undefined = await files
-      .find((file) => file.filename === 'package.json')
-      ?.getData(new TextWriter())
+    const packageJsonContent: string | undefined = zipEntries
+      .find((zipEntry) => zipEntry.entryName === 'package.json')
+      ?.getData()
+      .toString('utf8')
     const packageJsonParsed: PackageInfo | undefined = packageJsonContent ? JSON.parse(packageJsonContent) : undefined
 
     expect(packageJsonParsed?.id).to.be.a('string').and.not.empty
     expect(packageJsonParsed?.version).to.be.a('string').and.not.empty
-
-    await zipReader.close()
   })
 
   it('build in development mode', async () => {
@@ -123,42 +113,38 @@ describe('build', () => {
 
     expect(distDir).to.include(developmentBuildName)
 
-    const zipBuffer: Buffer = await readFile(join('dist', developmentBuildName))
-    const uInt8Array: Uint8Array = new Uint8Array(zipBuffer)
-    const zipReader: ZipReader<Uint8ArrayReader> = new ZipReader(new Uint8ArrayReader(uInt8Array))
-    const entries: Entry[] = await zipReader.getEntries()
-    const files: FileEntry[] = entries.filter((entry) => !entry.directory)
-    const normalizedFilenames: string[] = normalizeFilenames(files)
+    const zip = new AdmZip(join('dist', developmentBuildName))
+    const zipEntries = zip.getEntries()
+    const fileNames = zipEntries.map((zipEntry) => zipEntry.entryName)
 
-    expect(normalizedFilenames).to.include('package.json')
-    expect(normalizedFilenames).to.include('modules/index.lua')
-    expect(normalizedFilenames).to.include('config/README.md')
-    expect(normalizedFilenames).to.include('.git/HEAD')
-    expect(normalizedFilenames).to.include('.gitignore')
-    expect(normalizedFilenames).to.include('modules/types/index.lua')
+    // const zipBuffer: Buffer = await readFile(join('dist', developmentBuildName))
+    // const uInt8Array: Uint8Array = new Uint8Array(zipBuffer)
+    // const zipReader: ZipReader<Uint8ArrayReader> = new ZipReader(new Uint8ArrayReader(uInt8Array))
+    // const entries: Entry[] = await zipReader.getEntries()
+    // const files: FileEntry[] = entries.filter((entry) => !entry.directory)
+    // const normalizedFilenames: string[] = normalizeFilenames(files)
 
-    const fileChecks = files.map(async (file) => {
-      const data = await file.getData(new Uint8ArrayWriter())
-      return {
-        filename: file.filename,
-        isEmpty: data.length === 0,
-      }
-    })
-    const fileCheckResults = await Promise.all(fileChecks)
+    expect(fileNames).to.include('package.json')
+    expect(fileNames).to.include('modules/index.lua')
+    expect(fileNames).to.include('config/README.md')
+    expect(fileNames).to.include('.git/HEAD')
+    expect(fileNames).to.include('.gitignore')
+    expect(fileNames).to.include('modules/types/index.lua')
 
-    for (const {filename, isEmpty} of fileCheckResults) {
-      expect(isEmpty, `File "${filename}" is empty`).to.be.false
+    for (const entry of zipEntries) {
+      const data = entry.getData()
+      expect(data.length === 0, `File ${entry.entryName} is empty`).to.be.false
     }
 
-    const packageJsonContent: string | undefined = await files
-      .find((file) => file.filename === 'package.json')
-      ?.getData(new TextWriter())
+    const packageJsonContent: string | undefined = zipEntries
+      .find((zipEntry) => zipEntry.entryName === 'package.json')
+      ?.getData()
+      .toString('utf8')
+
     const packageJsonParsed: PackageInfo | undefined = packageJsonContent ? JSON.parse(packageJsonContent) : undefined
 
     expect(packageJsonParsed?.id).to.be.a('string').and.not.empty
     expect(packageJsonParsed?.version).to.be.a('string').and.not.empty
-
-    await zipReader.close()
   })
 
   it('cause error if package.json not exists', async () => {
