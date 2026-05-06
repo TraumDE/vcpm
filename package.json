@@ -6,8 +6,8 @@
   "bin": "./bin/run.js",
   "bugs": "https://github.com/TraumDE/vcpm/issues",
   "dependencies": {
-    "@oclif/core": "^4.8.0",
-    "@oclif/plugin-autocomplete": "^3.2.40",
+    "@oclif/core": "^4.11.0",
+    "@oclif/plugin-autocomplete": "^3.2.47",
     "@zip.js/zip.js": "^2.8.16",
     "glob": "^13.0.1"
   },
