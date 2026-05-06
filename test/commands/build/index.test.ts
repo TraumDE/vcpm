@@ -1,7 +1,7 @@
 import {runCommand} from '@oclif/test'
 import AdmZip from 'adm-zip'
 import {expect} from 'chai'
-import {mkdir, mkdtemp, readdir, readFile, rm, writeFile} from 'node:fs/promises'
+import {mkdir, mkdtemp, readdir, rm, writeFile} from 'node:fs/promises'
 import {join} from 'node:path'
 
 import type {PackageInfo} from '../../../src/types/package-info'
@@ -67,13 +67,6 @@ describe('build', () => {
     const zipEntries = zip.getEntries()
     const fileNames = zipEntries.map((zipEntry) => zipEntry.entryName)
 
-    // const zipBuffer: Buffer = await readFile(join('dist', productionBuildName))
-    // const uInt8Array: Uint8Array = new Uint8Array(zipBuffer)
-    // const zipReader: ZipReader<Uint8ArrayReader> = new ZipReader(new Uint8ArrayReader(uInt8Array))
-    // const entries: Entry[] = await zipReader.getEntries()
-    // const files: FileEntry[] = entries.filter((entry) => !entry.directory)
-    // const normalizedFilenames: string[] = normalizeFilenames(files)
-
     expect(fileNames).to.include('package.json')
     expect(fileNames).to.include('modules/index.lua')
     expect(fileNames).to.include('config/README.md')
@@ -116,13 +109,6 @@ describe('build', () => {
     const zip = new AdmZip(join('dist', developmentBuildName))
     const zipEntries = zip.getEntries()
     const fileNames = zipEntries.map((zipEntry) => zipEntry.entryName)
-
-    // const zipBuffer: Buffer = await readFile(join('dist', developmentBuildName))
-    // const uInt8Array: Uint8Array = new Uint8Array(zipBuffer)
-    // const zipReader: ZipReader<Uint8ArrayReader> = new ZipReader(new Uint8ArrayReader(uInt8Array))
-    // const entries: Entry[] = await zipReader.getEntries()
-    // const files: FileEntry[] = entries.filter((entry) => !entry.directory)
-    // const normalizedFilenames: string[] = normalizeFilenames(files)
 
     expect(fileNames).to.include('package.json')
     expect(fileNames).to.include('modules/index.lua')
