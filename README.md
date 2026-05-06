@@ -9,6 +9,7 @@ new project and build it for release
 [![Version](https://img.shields.io/npm/v/vcpm.svg)](https://npmjs.org/package/vcpm)
 [![Downloads/week](https://img.shields.io/npm/dw/vcpm.svg)](https://npmjs.org/package/vcpm)
 [![License](https://img.shields.io/github/license/TraumDE/vcpm?)](https://github.com/TraumDE/vcpm/blob/main/LICENSE)
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://conventionalcommits.org)
 
 - [Installation](#installation)
 - [Usage](#usage)
