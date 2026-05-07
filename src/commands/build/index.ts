@@ -7,6 +7,9 @@ import {promises as fs} from 'node:fs'
 
 import type {PackageInfo} from '../../types/package-info.d.ts'
 
+import isValidPackageId from '../../utils/is-valid-package-id.js'
+import isValidPackageVersion from '../../utils/is-valid-package-version.js'
+
 export class Build extends Command {
   static description = 'Build project'
   static flags = {
@@ -75,23 +78,13 @@ export class Build extends Command {
       this.error('Its not voxel core content pack')
     }
 
-    const validPackageId = (): boolean => {
-      const idRegex = /^[a-zA-Z_][a-zA-Z0-9_]{1,23}$/
-      return idRegex.test(packageJsonParsed.id)
-    }
-
-    const validPackageVersion = (): boolean => {
-      const versionRegex = /^\d+\.\d+\.\d+$/
-      return versionRegex.test(packageJsonParsed.version)
-    }
-
-    if (!validPackageId()) {
+    if (!isValidPackageId(packageJsonParsed.id)) {
       this.error(
         'Package ID must start with a letter or underscore, contain only letters, numbers, and underscores, and be 2-24 characters long',
       )
     }
 
-    if (!validPackageVersion()) {
+    if (!isValidPackageVersion(packageJsonParsed.version)) {
       this.error('Version must be in the format X.Y.Z')
     }
 

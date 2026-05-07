@@ -1,4 +1,7 @@
+export type PackageId = string
+export type PackageVersion = `${string}.${string}.${string}`
+
 export interface PackageInfo {
-  id: string
-  version: string
+  id: PackageId
+  version: PackageVersion
 }
