@@ -7,8 +7,8 @@ import {promises as fs} from 'node:fs'
 
 import type {PackageInfo} from '../../types/package-info.d.ts'
 
-import isValidPackageId from '../../utils/is-valid-package-id.js'
-import isValidPackageVersion from '../../utils/is-valid-package-version.js'
+import {ERRORS} from '../../errors/messages.js'
+import validatePackageInfo from '../../utils/validate-package-info.js'
 
 export class Build extends Command {
   static description = 'Build project'
@@ -68,25 +68,13 @@ export class Build extends Command {
   }
 
   private async readPackage(): Promise<PackageInfo> {
-    if (!(await this.fileExists('package.json'))) {
-      this.error('package.json file does not exist')
-    }
+    if (!(await this.fileExists('package.json'))) this.error(ERRORS.MISSING_PACKAGE_JSON)
 
-    const packageJsonParsed = JSON.parse(await fs.readFile('package.json', 'utf8'))
+    const packageJsonParsed: PackageInfo = JSON.parse(await fs.readFile('package.json', 'utf8'))
 
-    if (!packageJsonParsed.id || !packageJsonParsed.version) {
-      this.error('Its not voxel core content pack')
-    }
+    if (!packageJsonParsed.id) this.error(ERRORS.NOT_VOXEL_CORE_PACKAGE)
 
-    if (!isValidPackageId(packageJsonParsed.id)) {
-      this.error(
-        'Package ID must start with a letter or underscore, contain only letters, numbers, and underscores, and be 2-24 characters long',
-      )
-    }
-
-    if (!isValidPackageVersion(packageJsonParsed.version)) {
-      this.error('Version must be in the format X.Y.Z')
-    }
+    validatePackageInfo({id: packageJsonParsed.id, version: packageJsonParsed.version})
 
     return {
       id: packageJsonParsed.id,
