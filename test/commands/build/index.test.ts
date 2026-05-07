@@ -6,6 +6,8 @@ import {join} from 'node:path'
 
 import type {PackageInfo} from '../../../src/types/package-info'
 
+import {ERRORS} from '../../../src/errors/messages'
+
 let testDir: string
 let originalCwd: string
 
@@ -135,7 +137,7 @@ describe('build', () => {
 
   it('cause error if package.json not exists', async () => {
     const {error} = await runCommand('build')
-    expect(error?.message).to.contain('package.json file does not exist')
+    expect(error?.message).to.contain(ERRORS.MISSING_PACKAGE_JSON)
     expect(error?.oclif?.exit).to.equal(2)
   })
 
@@ -159,7 +161,7 @@ describe('build', () => {
       }),
     )
     const {error} = await runCommand('build')
-    expect(error?.message).to.contain('Its not voxel core content pack')
+    expect(error?.message).to.contain(ERRORS.NOT_VOXEL_CORE_PACKAGE)
     expect(error?.oclif?.exit).to.equal(2)
   })
 
@@ -172,9 +174,7 @@ describe('build', () => {
       }),
     )
     const {error} = await runCommand('build')
-    expect(error?.message).to.contain(
-      'Package ID must start with a letter or underscore, contain only letters, numbers, and underscores, and be 2-24 characters long',
-    )
+    expect(error?.message).to.contain(ERRORS.WRONG_PACK_ID)
     expect(error?.oclif?.exit).to.equal(2)
   })
 
@@ -187,7 +187,7 @@ describe('build', () => {
       }),
     )
     const {error} = await runCommand('build')
-    expect(error?.message).to.contain('Version must be in the format X.Y.Z')
+    expect(error?.message).to.contain(ERRORS.WRONG_PACK_VERSION)
     expect(error?.oclif?.exit).to.equal(2)
   })
 })
